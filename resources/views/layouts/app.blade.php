@@ -24,6 +24,8 @@
             
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{{ route('products') }}">Products</a>
+                <a class="nav-link" href="{{ route('image-upload') }}">Image Upload</a>
+                <a class="nav-link" href="{{ route('optimized-image-upload') }}">Optimized Upload</a>
                 @livewire('cart-count')
                 
                 @auth

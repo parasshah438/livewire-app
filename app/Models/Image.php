@@ -12,15 +12,25 @@ class Image extends Model
     protected $fillable = [
         'name',
         'path',
+        'webp_path',
+        'thumbnails',
         'original_name',
         'type',
         'size',
+        'original_size',
+        'optimized_size',
+        'optimization_quality',
+        'is_optimized',
         'sort_order'
     ];
 
     protected $casts = [
         'size' => 'integer',
+        'original_size' => 'integer',
+        'optimized_size' => 'integer',
         'sort_order' => 'integer',
+        'thumbnails' => 'array',
+        'is_optimized' => 'boolean',
     ];
 
     public function getUrlAttribute()
@@ -28,9 +38,49 @@ class Image extends Model
         return asset('storage/' . $this->path);
     }
 
+    public function getWebpUrlAttribute()
+    {
+        return $this->webp_path ? asset('storage/' . $this->webp_path) : null;
+    }
+
+    public function getThumbnailUrl($size)
+    {
+        if ($this->thumbnails && isset($this->thumbnails[$size])) {
+            return asset('storage/' . $this->thumbnails[$size]);
+        }
+        return null;
+    }
+
     public function getFileSizeFormattedAttribute()
     {
         $bytes = $this->size;
+        if ($bytes >= 1073741824) {
+            return number_format($bytes / 1073741824, 2) . ' GB';
+        } elseif ($bytes >= 1048576) {
+            return number_format($bytes / 1048576, 2) . ' MB';
+        } elseif ($bytes >= 1024) {
+            return number_format($bytes / 1024, 2) . ' KB';
+        } else {
+            return $bytes . ' bytes';
+        }
+    }
+
+    public function getOptimizationSavingsAttribute()
+    {
+        if ($this->original_size && $this->optimized_size) {
+            $savings = $this->original_size - $this->optimized_size;
+            $percentage = round(($savings / $this->original_size) * 100, 1);
+            return [
+                'bytes' => $savings,
+                'percentage' => $percentage,
+                'formatted' => $this->formatBytes($savings)
+            ];
+        }
+        return null;
+    }
+
+    private function formatBytes($bytes)
+    {
         if ($bytes >= 1073741824) {
             return number_format($bytes / 1073741824, 2) . ' GB';
         } elseif ($bytes >= 1048576) {

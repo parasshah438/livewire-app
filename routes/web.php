@@ -10,10 +10,44 @@ use App\Livewire\EmployeeRegistration;
 use App\Livewire\ProductList;
 use App\Livewire\Cart;
 
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('lifecycle-docs', function () {
+    return view('lifecycle-documentation');
+})->name('lifecycle');
+
+//Livewire Authentication
+Route::middleware('guest')->group(function () {
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
+    Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
+    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
+});
+
+//User Dashboard and Profile
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/profile', App\Livewire\UserProfile::class)->name('user-profile');
+
+    //Users listing
+    Route::get('/users', App\Livewire\UserListing::class)->name('users.index');
+    //Todo List
+    Route::get('/todos', App\Livewire\TodoList::class)->name('todos.index');
+    //Logout route    
+    Route::post('/logout', function () {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/');
+    })->name('logout');
+});
+
+//Livewire Learning Routes
+Route::get('counter', function () {
+    return view('livewire-demo', ['component' => 'counter']);
+})->name('counter');
 
 //Contact Us
 Route::get('contact-us', ContactUs::class)->name('contact');
@@ -34,46 +68,12 @@ Route::get('dependent-dropdowns', function () {
     return view('dependent-dropdowns');
 })->name('dependent-dropdowns');
 
-//Livewire Learning Routes
-Route::get('counter', function () {
-    return view('livewire-demo', ['component' => 'counter']);
-})->name('counter');
-
-Route::get('lifecycle-docs', function () {
-    return view('lifecycle-documentation');
-})->name('lifecycle');
-
 //Image Upload
 Route::get('/image-upload', App\Livewire\ImageUpload::class)->name('image-upload');
+Route::get('/optimized-image-upload', App\Livewire\OptimizedImageUpload::class)->name('optimized-image-upload');
+Route::get('/sample-file-upload',App\Livewire\SampleFileUpload::class)->name('sample-file-upload');
+Route::get('/image-gallery', App\Livewire\ImageGallery::class)->name('image-gallery');
 
-//Livewire Authentication
-Route::middleware('guest')->group(function () {
-    Route::get('/login', Login::class)->name('login');
-    Route::get('/register', Register::class)->name('register');
-    Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
-    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
-});
-
-//User Dashboard and Profile
-Route::middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/profile', App\Livewire\UserProfile::class)->name('user-profile');
-
-    //Users listing
-    Route::get('/users', App\Livewire\UserListing::class)->name('users.index');
-    
-    //Todo List
-    Route::get('/todos', App\Livewire\TodoList::class)->name('todos.index');
-    
-   
-    //Logout route    
-    Route::post('/logout', function () {
-        auth()->logout();
-        session()->invalidate();
-        session()->regenerateToken();
-        return redirect('/');
-    })->name('logout');
-});
 
 //Test Mail Route (for debugging)
 Route::get('/test-mail', function () {
