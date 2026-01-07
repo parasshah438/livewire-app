@@ -5,10 +5,12 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Dashboard;
 use App\Livewire\ContactUs;
 use App\Livewire\EmployeeRegistration;
 use App\Livewire\ProductList;
 use App\Livewire\Cart;
+use App\Livewire\HolidayAPI;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,23 +22,23 @@ Route::get('lifecycle-docs', function () {
 
 //Livewire Authentication
 Route::middleware('guest')->group(function () {
-    Route::get('/login', Login::class)->name('login');
-    Route::get('/register', Register::class)->name('register');
-    Route::get('/forgot-password', ForgotPassword::class)->name('password.request');
-    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
+    Route::get('login', Login::class)->name('login');
+    Route::get('register', Register::class)->name('register');
+    Route::get('forgot-password', ForgotPassword::class)->name('password.request');
+    Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
 //User Dashboard and Profile
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/profile', App\Livewire\UserProfile::class)->name('user-profile');
+    Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('profile', App\Livewire\UserProfile::class)->name('user-profile');
 
     //Users listing
-    Route::get('/users', App\Livewire\UserListing::class)->name('users.index');
+    Route::get('users', App\Livewire\UserListing::class)->name('users.index');
     //Todo List
-    Route::get('/todos', App\Livewire\TodoList::class)->name('todos.index');
+    Route::get('todos', App\Livewire\TodoList::class)->name('todos.index');
     //Logout route    
-    Route::post('/logout', function () {
+    Route::post('logout', function () {
         auth()->logout();
         session()->invalidate();
         session()->regenerateToken();
@@ -56,11 +58,11 @@ Route::get('contact-us', ContactUs::class)->name('contact');
 Route::get('employee-registration', EmployeeRegistration::class)->name('employee-registration');
 
 //eCommerce Routes
-Route::get('/products', ProductList::class)->name('products');
-Route::get('/cart', Cart::class)->name('cart');
+Route::get('products', ProductList::class)->name('products');
+Route::get('cart', Cart::class)->name('cart');
 
 //Static Pages
-Route::get('/blog', function () {
+Route::get('blog', function () {
     return view('blog');
 })->name('blog');
 
@@ -69,14 +71,16 @@ Route::get('dependent-dropdowns', function () {
 })->name('dependent-dropdowns');
 
 //Image Upload
-Route::get('/image-upload', App\Livewire\ImageUpload::class)->name('image-upload');
-Route::get('/optimized-image-upload', App\Livewire\OptimizedImageUpload::class)->name('optimized-image-upload');
-Route::get('/sample-file-upload',App\Livewire\SampleFileUpload::class)->name('sample-file-upload');
-Route::get('/image-gallery', App\Livewire\ImageGallery::class)->name('image-gallery');
+Route::get('image-upload', App\Livewire\ImageUpload::class)->name('image-upload');
+Route::get('optimized-image-upload', App\Livewire\OptimizedImageUpload::class)->name('optimized-image-upload');
+Route::get('sample-file-upload',App\Livewire\SampleFileUpload::class)->name('sample-file-upload');
+Route::get('image-gallery', App\Livewire\ImageGallery::class)->name('image-gallery');
 
+//API Integration
+Route::get('holiday-api', App\Livewire\HolidayAPI::class)->name('holiday-api');
 
 //Test Mail Route (for debugging)
-Route::get('/test-mail', function () {
+Route::get('test-mail', function () {
     try {
         \Illuminate\Support\Facades\Mail::raw('This is a test email from Laravel!', function ($message) {
             $message->to('parasshah438@gmail.com')

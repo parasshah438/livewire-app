@@ -22,7 +22,7 @@ class Login extends Component
     {
         // Redirect if already authenticated
         if (Auth::check()) {
-            return $this->redirect('/home', navigate: true);
+            return $this->redirect('/dashboard', navigate: true);
         }
     }
 
@@ -35,7 +35,7 @@ class Login extends Component
             
             session()->flash('message', 'Welcome back! You have been successfully logged in.');
             
-            return $this->redirect('/home', navigate: true);
+            return $this->redirect('/dashboard', navigate: true);
         }
 
         throw ValidationException::withMessages([

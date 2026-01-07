@@ -4,9 +4,9 @@
             <div class="row justify-content-center text-center">
                 <div class="col-lg-8">
                     <h1 class="hero-title display-4 fw-bold mb-4">
-                        <span class="text-gradient">Employee Registration</span>
+                        <span class="text-white">Employee Registration</span>
                     </h1>
-                    <p class="hero-subtitle lead text-muted mb-0">
+                    <p class="hero-subtitle lead text-white mb-0">
                         Complete the multi-step registration form to add a new employee to the system.
                     </p>
                 </div>

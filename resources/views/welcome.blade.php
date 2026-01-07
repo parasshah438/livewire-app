@@ -141,12 +141,12 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand text-white fw-bold fs-4" href="{{ url('/') }}">
+            <a class="navbar-brand text-white fw-bold fs-4" wire:navigate href="{{ url('/') }}">
                 <i class="fas fa-bolt me-2"></i>{{ config('app.name', 'Laravel') }}
             </a>
             
             <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('products') }}" class="btn-outline-light-custom">
+                <a wire:navigate href="{{ route('products') }}" class="btn-outline-light-custom">
                     <i class="fas fa-shopping-bag me-2"></i>Products
                 </a>
                 
@@ -154,16 +154,16 @@
                 
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn-outline-light-custom">
+                        <a wire:navigate href="{{ route('dashboard') }}"  class="btn-outline-light-custom">
                             <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="btn-outline-light-custom">
+                        <a wire:navigate href="{{ route('login') }}" class="btn-outline-light-custom">
                             <i class="fas fa-sign-in-alt me-2"></i>Login
                         </a>
                         
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn-gradient-secondary">
+                            <a wire:navigate href="{{ route('register') }}" class="btn-gradient-secondary">
                                 <i class="fas fa-user-plus me-2"></i>Register
                             </a>
                         @endif
@@ -188,21 +188,21 @@
                         </p>
                         
                         <div class="d-flex flex-wrap gap-3 mb-4">
-                            <a href="{{ route('products') }}" class="btn-gradient-primary pulse-animation">
+                            <a wire:navigate href="{{ route('products') }}" class="btn-gradient-primary pulse-animation">
                                 <i class="fas fa-shopping-bag me-2"></i>Shop Now
                             </a>
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="btn-gradient-secondary">
+                                <a wire:navigate href="{{ url('/dashboard') }}" class="btn-gradient-secondary">
                                     <i class="fas fa-rocket me-2"></i>Go to Dashboard
                                 </a>
-                                <a href="{{ route('user-profile') }}" class="btn-outline-light-custom">
+                                <a wire:navigate href="{{ route('user-profile') }}" class="btn-outline-light-custom">
                                     <i class="fas fa-user me-2"></i>My Profile
                                 </a>
                             @else
-                                <a href="{{ route('login') }}" class="btn-gradient-secondary">
+                                <a wire:navigate href="{{ route('login') }}" class="btn-gradient-secondary">
                                     <i class="fas fa-sign-in-alt me-2"></i>Get Started
                                 </a>
-                                <a href="{{ route('register') }}" class="btn-outline-light-custom">
+                                <a wire:navigate href="{{ route('register') }}" class="btn-outline-light-custom">
                                     <i class="fas fa-user-plus me-2"></i>Create Account
                                 </a>
                             @endauth
@@ -416,20 +416,20 @@
                     
                     <div class="d-flex flex-wrap justify-content-center gap-3">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="btn-gradient-primary">
+                            <a wire:navigate href="{{ url('/dashboard') }}" class="btn-gradient-primary">
                                 <i class="fas fa-rocket me-2"></i>Explore Dashboard
                             </a>
-                            <a href="{{ route('users.index') }}" class="btn-gradient-secondary">
+                            <a wire:navigate href="{{ route('users.index') }}" class="btn-gradient-secondary">
                                 <i class="fas fa-users me-2"></i>User Management
                             </a>
                         @else
-                            <a href="{{ route('products') }}" class="btn-gradient-primary pulse-animation">
+                            <a wire:navigate href="{{ route('products') }}" class="btn-gradient-primary pulse-animation">
                                 <i class="fas fa-shopping-bag me-2"></i>Browse Products
                             </a>
-                            <a href="{{ route('register') }}" class="btn-gradient-secondary">
+                            <a wire:navigate href="{{ route('register') }}" class="btn-gradient-secondary">
                                 <i class="fas fa-user-plus me-2"></i>Create Account
                             </a>
-                            <a href="{{ route('login') }}" class="btn-outline-light-custom">
+                            <a wire:navigate href="{{ route('login') }}" class="btn-outline-light-custom">
                                 <i class="fas fa-sign-in-alt me-2"></i>Login to Demo
                             </a>
                         @endauth

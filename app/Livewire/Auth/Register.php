@@ -28,7 +28,7 @@ class Register extends Component
     {
         // Redirect if already authenticated
         if (Auth::check()) {
-            return $this->redirect('/home', navigate: true);
+            return $this->redirect('/dashboard', navigate: true);
         }
     }
 
@@ -46,7 +46,7 @@ class Register extends Component
 
         session()->flash('message', 'Welcome! Your account has been created successfully.');
 
-        return $this->redirect('/home', navigate: true);
+        return $this->redirect('/dashboard', navigate: true);
     }
 
     public function render()
